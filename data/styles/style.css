@@ -1,0 +1,132 @@
+html{
+    font-size: 11px;
+}
+
+table {
+    width: 100%;
+    table-layout:fixed;
+    word-break: break-all;
+}
+
+div {
+    max-width: 100%;
+    text-align: center;
+}
+
+body {
+    background-color: white;
+    height: 100vh;
+    margin: 0;
+    padding: 0;
+}
+
+div.Top {
+    margin-top: 20px;
+}
+
+h1 {
+    font-size: 40px;
+}
+
+a.mylink {
+    text-decoration: none;
+    color: #2828FF;
+    -webkit-transition: 0.3s all ease;
+    transition: 0.3s ease all;
+}
+
+a.mylink:hover {
+    color: #000079;
+}
+
+a.mylink:focus {
+    color: #000079;
+}
+
+.mylink {
+    font-size: 10px;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    display: inline-block;
+    text-align: center;
+    width: 120px;
+    font-weight: bold;
+    padding: 5px 0px;
+    border: 3px solid #FFA042;
+    border-radius: 5px;
+    position: relative;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.1);
+    background-color: #CEFFCE;
+}
+
+.mylink:hover {
+    -webkit-transition: 0.5s all ease;
+    transition: 0.5s all ease;
+    background-color: #53FF53
+}
+
+.mylink:focus {
+    -webkit-transition: 0.5s all ease;
+    transition: 0.5s all ease;
+    background-color: #53FF53
+}
+
+select.selection {
+    width: 270px;
+    height: 30px;
+    border-radius: 10px;
+    border: 2px solid #FFA042;
+    color: #2828FF;
+    background-color: #CEFFCE;
+    font-weight: bold;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.1);
+    -webkit-transition: 0.5s all ease;
+    transition: 0.5s all ease;
+}
+
+select.selection:hover {
+    background-color: #FFFF6F
+}
+
+select.selection:focus {
+    background-color: #FFFF6F
+}
+
+option {
+    font-weight: bold;
+}
+
+div.Centers {
+    margin-top: 20px;
+}
+
+div.Bottom {
+    margin-top: 20px;
+}
+
+a#Send_message {
+    text-decoration: none;
+    color: #FFFFFF;
+    text-transform: uppercase;
+    font-size: 20px;
+    background-color: #0000C6;
+    font-weight: bold;
+    letter-spacing: 3px;
+    display: inline-block;
+    text-align: center;
+    width: 260px;
+    border: 3px solid #FFA042;
+    border-radius: 5px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.1);
+    position: relative;
+    -webkit-transition: 0.5s all ease;
+    transition: 0.5s all ease;
+}
+
+a#Send_message:hover {
+    background-color: #2828FF;
+}
+
+a#Send_message:focus {
+    background-color: #2828FF;
+}

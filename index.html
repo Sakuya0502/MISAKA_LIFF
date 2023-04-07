@@ -1,0 +1,39 @@
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, viewport-fit=cover">
+    <title>MISAKA LINE LIFF</title>
+    <!--CSS-->
+    <link rel="stylesheet" href="./data/styles/style.css">
+    <!--JS-->
+    <script src="./data/scripts/main.js"></script>
+    <!--LIFF SDK-->
+    <script charset="utf-8" src="https://static.line-scdn.net/liff/edge/2/sdk.js"></script>
+</head>
+<body>
+    <div class="Top">
+        <h1>歡迎使用御坂LIFF</h1>
+        <div class="alllink">
+            <a href="https://line.me/ti/p/1AceQRx8_Z" class="mylink">修改者</a>
+            <a href="https://github.com/crash-override404" class="mylink">原作者</a>
+        </div>
+    </div>
+    <div class="Centers">
+        <select class="selection" id="selecter" onchange="changeType()" required>
+            <option value="None_choosen" disabled hidden selected>請選擇要發送的類型~</option>
+            <option value="profile">個人簡介</option>
+            <option value="text">文字</option>
+            <option value="image">圖片</option>
+            <option value="video">影片</option>
+            <option value="audio">語音</option>
+            <option value="sticker">貼圖</option>
+            <option value="stickerimage">貼圖圖片(大貼圖)</option>
+            <option value="messages">訊息</option>
+            <option value="messagesUrl">網址訊息</option>
+            <option value="scanQr">掃描QR碼</option>
+        </select>
+    </div>
+    <div class="Bottom">
+        <a href="#" id="Send_message">發送訊息</a>
+        <p class="">©2023 by MISAKA</p>
+    </div>
+</body>
