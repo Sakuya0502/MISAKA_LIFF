@@ -43,8 +43,8 @@ function initLiff(liffId) {
     liff.init({
         liffId: liffId
     }).then(() => {
-        if (getParameterByName("type") == "liffToken") getLiffToken();
-        if (getParameterByName("auto") == "yes" && getParameterByName("type")) {
+        if (getParameterByName("selecter") == "liffToken") getLiffToken();
+        if (getParameterByName("auto") == "yes" && getParameterByName("selecter")) {
             sendLiffMessage();
         }
         initApp();
@@ -60,7 +60,7 @@ function initApp() {
         button.innerHTML = "請先登入";
         button.id = "liffLogin";
     } else {
-        if (!liff.isInClient() && getParameterByName("type") !== undefined) {
+        if (!liff.isInClient() && getParameterByName("selecter") !== undefined) {
             var parent = document.getElementById("content");
             var element = document.createElement("a");
             element.href = "#";
@@ -104,10 +104,10 @@ function initContent(type) {
     var label = document.createElement("label");
     var textarea = document.createElement("textarea");
     if (!type) {
-        type = getParameterByName("type");
-        if (type) document.getElementById("type").value = type;
-        if (document.getElementById("type").selectedIndex <= 0) {
-            document.getElementById("type").value = "choose";
+        type = getParameterByName("selecter");
+        if (type) document.getElementById("selecter").value = type;
+        if (document.getElementById("selecter").selectedIndex <= 0) {
+            document.getElementById("selecter").value = "choose";
         }
         isLoggedIn = false;
     }
@@ -286,7 +286,7 @@ function initContent(type) {
 }
 
 function sendLiffMessage() {
-    var type = document.getElementById("type").value;
+    var type = document.getElementById("selecter").value;
     var client = new HttpClient();
     var userDisplayName = "MISAKA";
     var userPictureUrl = "https://truth.bahamut.com.tw/s01/201307/70d002bb30cf6afcaf7f157e0c3fda73.JPG";
