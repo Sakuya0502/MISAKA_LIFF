@@ -28,7 +28,7 @@ var HttpClient = function() {
 };
 
 function initVConsole() {
-    window.vConsole = new window.VConsole({
+    var vconsole = new window.VConsole({
         defaultPlugins: ["system", "network", "element", "storage"],
         maxLogNumber: 1000,
         onReady: function() {
