@@ -518,24 +518,6 @@ function getParameterByName(name) {
 }
 */ //useless
 
-function getParameterByName(name) {
-    name = name.replace(/[\[\]]/g, "\\$&");
-    var regex = new RegExp("[?&]" + name + "(=([^&#]*)|&|#|$)"),
-        results = regex.exec(url);
-    if (!results) return null;
-    if (!results[2]) return "";
-    return decodeURIComponent(results[2].replace(/\+/g, " "));
-}
-
-function removeElements(classname) {
-    var list = document.getElementsByClassName(classname);
-    for (var i = list.length - 1; 0 <= i; i--) {
-        if (list[i] && list[i].parentElement && list[i].id && list[i].id == "data") {
-            list[i].parentElement.removeChild(list[i]);
-        }
-    }
-}
-
 function sendAlertIfNotInClient() {
     alert('此按鈕不可用，LIFF在瀏覽器外部中打開（請在LINE中使用）');
 }
