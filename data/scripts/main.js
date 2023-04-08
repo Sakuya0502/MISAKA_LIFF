@@ -295,7 +295,7 @@ function sendLiffMessage() {
         if (type == "profile") {
             liff.sendMessages([{
                 type: "flex",
-                altText: "Profile " + userDisplayName,
+                altText: userDisplayName + "的個人資訊",
                 contents: {
                     "type": "bubble",
                     "size": "kilo",
@@ -336,7 +336,8 @@ function sendLiffMessage() {
                               "type": "text",
                               "text": profile.statusMessage,
                               "weight": "bold",
-                              "size": "md"
+                              "size": "md",
+                              "wrap": true
                             }
                           ]
                         }
@@ -506,6 +507,7 @@ function logoutLiff() {
     }
 }
 
+/*
 function getParameterByName(name) {
     var result = null;
     name = name.replace(/[\[\]]/g, "\\$&");
@@ -514,6 +516,7 @@ function getParameterByName(name) {
     }
     return result
 }
+*/ //useless
 
 function getParameterByNameV2(name) {
     name = name.replace(/[\[\]]/g, "\\$&");
