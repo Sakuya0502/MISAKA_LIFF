@@ -57,7 +57,7 @@ function initApp() {
     console.log("LIFF initialized!");
     if (!liff.isLoggedIn()) {
         var button = document.getElementById("Send_message");
-        button.innerHTML = "請先登入";
+        button.innerHTML = "請先登入LINE";
         button.id = "liffLogin";
     } else {
         if (!liff.isInClient() && getParameterByName("selecter") !== undefined) {
@@ -94,6 +94,7 @@ function registerButtonHandlers() {
 
 function changeType() {
     var type = document.getElementById("selecter").value;
+    removeElements("Centers");
     initContent(type);
 }
 
@@ -107,7 +108,7 @@ function initContent(type) {
         type = getParameterByName("selecter");
         if (type) document.getElementById("selecter").value = type;
         if (document.getElementById("selecter").selectedIndex <= 0) {
-            document.getElementById("selecter").value = "choose";
+            document.getElementById("selecter").value = "None_choosen";
         }
         isLoggedIn = false;
     }
@@ -115,13 +116,13 @@ function initContent(type) {
     if (getParameterByName("share") == "yes") {
         document.getElementById("share").checked = true;
     }
-    */
     if (getParameterByName("liffId")) {
         liffId = getParameterByName("liffId");
     }
+    */
     var parent = document.getElementById("content");
     if (type == "text") {
-        element.className = "form-label-group";
+        element.className = "Centers";
         element.id = "data";
         input.type = "text";
         input.id = "text";
@@ -137,7 +138,7 @@ function initContent(type) {
         element.appendChild(label);
         parent.insertBefore(element, parent.childNodes[4]);
     } else if (type == "sticker" || type == "stickerimage") {
-        element.className = "form-label-group";
+        element.className = "Centers";
         element.id = "data";
         input.type = "text";
         input.id = "packageId";
@@ -148,14 +149,14 @@ function initContent(type) {
             input.value = getParameterByName("packageId");
         }
         label.htmlFor = "packageId";
-        label.innerHTML = "Sticker Package ID";
+        label.innerHTML = "貼圖包 ID";
         element.appendChild(input);
         element.appendChild(label);
         parent.insertBefore(element, parent.childNodes[4]);
         element = document.createElement("div");
         input = document.createElement("input");
         label = document.createElement("label");
-        element.className = "form-label-group";
+        element.className = "Centers";
         element.id = "data";
         input.type = "text";
         input.id = "stickerId";
@@ -166,7 +167,7 @@ function initContent(type) {
             input.value = getParameterByName("stickerId");
         }
         label.htmlFor = "stickerId";
-        label.innerHTML = "Sticker ID";
+        label.innerHTML = "貼圖 ID";
         element.appendChild(input);
         element.appendChild(label);
         parent.insertBefore(element, parent.childNodes[4]);
@@ -174,7 +175,7 @@ function initContent(type) {
         checkbox = document.createElement("div");
         input = document.createElement("input");
         label = document.createElement("label");
-        checkbox.className = "form-label-group";
+        checkbox.className = "Centers";
         checkbox.id = "data";
         element.className = "custom-control custom-checkbox";
         input.type = "checkbox";
@@ -185,13 +186,13 @@ function initContent(type) {
         }
         label.htmlFor = "animation";
         label.className = "custom-control-label";
-        label.innerHTML = "Animation";
+        label.innerHTML = "動畫";
         element.appendChild(input);
         element.appendChild(label);
         checkbox.appendChild(element);
         parent.insertBefore(checkbox, parent.childNodes[4]);
     } else if (type == "image" || type == "video") {
-        element.className = "form-label-group";
+        element.className = "Centers";
         element.id = "data";
         input.type = "text";
         input.id = "downloadUrl";
@@ -202,14 +203,14 @@ function initContent(type) {
             input.value = getParameterByName("downloadUrl");
         }
         label.htmlFor = "downloadUrl";
-        label.innerHTML = "Download URL";
+        label.innerHTML = "下載網址";
         element.appendChild(input);
         element.appendChild(label);
         parent.insertBefore(element, parent.childNodes[4]);
         element = document.createElement("div");
         input = document.createElement("input");
         label = document.createElement("label");
-        element.className = "form-label-group";
+        element.className = "Centers";
         element.id = "data";
         input.type = "text";
         input.id = "previewUrl";
@@ -220,12 +221,12 @@ function initContent(type) {
             input.value = getParameterByName("previewUrl");
         }
         label.htmlFor = "previewUrl";
-        label.innerHTML = "Preview URL";
+        label.innerHTML = "預覽網址";
         element.appendChild(input);
         element.appendChild(label);
         parent.insertBefore(element, parent.childNodes[4]);
     } else if (type == "audio") {
-        element.className = "form-label-group";
+        element.className = "Centers";
         element.id = "data";
         input.type = "text";
         input.id = "downloadUrl";
@@ -236,16 +237,16 @@ function initContent(type) {
             input.value = getParameterByName("downloadUrl");
         }
         label.htmlFor = "downloadUrl";
-        label.innerHTML = "Download URL";
+        label.innerHTML = "下載網址";
         element.appendChild(input);
         element.appendChild(label);
         parent.insertBefore(element, parent.childNodes[4]);
     } else if (type == "messages") {
-        element.className = "form-label-group";
+        element.className = "Centers";
         element.id = "data";
         textarea.id = "messages";
         textarea.className = "form-control";
-        textarea.placeholder = "Messages json";
+        textarea.placeholder = "訊息JSON";
         textarea.rows = "5";
         if (getParameterByName("messages")) {
             textarea.value = getParameterByName("messages");
@@ -253,7 +254,7 @@ function initContent(type) {
         element.appendChild(textarea);
         parent.insertBefore(element, parent.childNodes[4]);
     } else if (type == "messagesUrl") {
-        element.className = "form-label-group";
+        element.className = "Centers";
         element.id = "data";
         input.type = "text";
         input.id = "messagesUrl";
@@ -264,12 +265,12 @@ function initContent(type) {
             input.value = getParameterByName("messagesUrl");
         }
         label.htmlFor = "messagesUrl";
-        label.innerHTML = "Messages JSON URL";
+        label.innerHTML = "訊息JSON網址";
         element.appendChild(input);
         element.appendChild(label);
         parent.insertBefore(element, parent.childNodes[4]);
     } else if (type == "scanQr") {
-        element.className = "form-label-group";
+        element.className = "Centers";
         element.id = "data";
         input.type = "text";
         input.id = "qrResult";
@@ -277,7 +278,7 @@ function initContent(type) {
         input.placeholder = "QR Code Result";
         input.required = true;
         label.htmlFor = "qrResult";
-        label.innerHTML = "QR Code Result";
+        label.innerHTML = "QR Code掃描結果";
         element.appendChild(input);
         element.appendChild(label);
         parent.insertBefore(element, parent.childNodes[4]);
