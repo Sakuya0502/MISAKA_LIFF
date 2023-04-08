@@ -1,13 +1,6 @@
 var liffId = "1660845055-GMJrEOVY";
 var params = location.search.substring(1);
 var url = window.location.href;
-if (params) {
-    try {
-        params = JSON.parse('{"' + decodeURI(params.replace(/&/g, "\",\"").replace(/=/g,"\":\"")) + '"}');
-    } catch (err) {
-        console.error(err)
-    }
-}
 
 window.onload = function() {
     initVConsole();
@@ -21,19 +14,22 @@ var HttpClient = function() {
         anHttpRequest.onreadystatechange = function() {
             if (anHttpRequest.readyState == 4 && anHttpRequest.status == 200)
                 aCallback(anHttpRequest.responseText);
-        };
+        }
         anHttpRequest.open("GET", aUrl, true);
         anHttpRequest.send(null);
-    };
-};
+    }
+}
 
-function getParameterByName(name) {
-    name = name.replace(/[\[\]]/g, "\\$&");
-    var regex = new RegExp("[?&]" + name + "(=([^&#]*)|&|#|$)"),
-        results = regex.exec(url);
-    if (!results) return null;
-    if (!results[2]) return "";
-    return decodeURIComponent(results[2].replace(/\+/g, " "));
+function getParameterByName(name){
+    name = name.replace(/[\[]/,"\\\[").replace(/[\]]/,"\\\]");
+    var regexS = "[\\?&]"+name+"=([^&#]*)";
+    var regex = new RegExp(regexS);
+    var results = regex.exec(window.location.href);
+    if(results == null) {
+        return "";
+    } else {
+        return decodeURIComponent(results[1].replace(/\+/g, " "));
+    }
 }
 
 function removeElements(classname) {
@@ -45,6 +41,7 @@ function removeElements(classname) {
     }
 }
 
+//vconsole
 function initVConsole() {
     var vconsole = new window.VConsole({
         defaultPlugins: ["system", "network", "element", "storage"],
@@ -52,7 +49,9 @@ function initVConsole() {
         onReady: function() {
             console.log("vConsole is ready.");
         },
-        onClearLog: function() {}
+        onClearLog: function() {
+            console.log("on clearLog");
+        }
     });
 }
 
@@ -61,8 +60,8 @@ function initLiff(liffId) {
     liff.init({
         liffId: liffId
     }).then(() => {
-        if (getParameterByName("selecter") == "liffToken") getLiffToken();
-        if (getParameterByName("auto") == "yes" && getParameterByName("selecter")) {
+        //if (getParameterByName("selecter") == "liffToken") getLiffToken();
+        if (getParameterByName("auto") == "yes" && getParameterByName("type")) {
             sendLiffMessage();
         }
         initApp();
@@ -78,7 +77,7 @@ function initApp() {
         button.innerHTML = "請先登入LINE";
         button.id = "liffLogin";
     } else {
-        if (!liff.isInClient() && getParameterByName("selecter") !== undefined) {
+        if (!liff.isInClient() && getParameterByName("type") !== undefined) {
             var parent = document.getElementById("content");
             var element = document.createElement("a");
             element.href = "#";
@@ -123,7 +122,7 @@ function initContent(type) {
     var label = document.createElement("label");
     var textarea = document.createElement("textarea");
     if (!type) {
-        type = getParameterByName("selecter");
+        type = getParameterByName("type");
         if (type) document.getElementById("selecter").value = type;
         if (document.getElementById("selecter").selectedIndex <= 0) {
             document.getElementById("selecter").value = "None_choosen";
@@ -478,6 +477,17 @@ function sendLiffMessage() {
                 });
             }).catch((err) => {
                 console.error("Parsing messages failed", err);
+            });
+        } else if (type == "scanQr") {
+            console.log("Sending URL...");
+            liff.sendMessages([{
+                type: "text",
+                text: document.getElementById("qrResult").value
+            }]).then(() => {
+                console.log("Success sending QR URL");
+                liff.closeWindow();
+            }).catch((err) => {
+                console.error("Sending QR URL failed", err);
             });
         }
     }).catch((err) => {
