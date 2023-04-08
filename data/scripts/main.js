@@ -373,16 +373,8 @@ function sendLiffMessage() {
 function sendMessages(messages) {
     if (!liff.isInClient()) {
         sendAlertIfNotInClient()
-    } else if (document.getElementById("share").checked == true) {
-        console.info("Start initializing share message");
-        if (liff.isApiAvailable("shareTargetPicker")) {
-            liff.shareTargetPicker(messages).then(() => {
-                console.log("Share message was launched");
-            }).catch((err) => {
-                console.error("Share message failed", err);
-            });
-        }
-    } else {
+    }
+    else {
         console.info("Start sending message");
         liff.sendMessages(messages).then(() => {
             console.info("Success sending message");
