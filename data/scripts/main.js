@@ -287,7 +287,7 @@ function initContent(type) {
 }
 
 function sendLiffMessage() {
-    var type = document.getElementById("type").value;
+    var type = document.getElementById("selecter").value;
     console.info(type);
     var client = new HttpClient();
     liff.getProfile().then(profile => {
