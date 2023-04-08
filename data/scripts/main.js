@@ -287,87 +287,183 @@ function initContent(type) {
 }
 
 function sendLiffMessage() {
-    var type = document.getElementById("selecter").value;
+    var type = document.getElementById("type").value;
+    console.info(type);
     var client = new HttpClient();
-    var userDisplayName = "MISAKA";
-    var userPictureUrl = "https://truth.bahamut.com.tw/s01/201307/70d002bb30cf6afcaf7f157e0c3fda73.JPG";
-    var userStatusMessage = "Hi!";
     liff.getProfile().then(profile => {
-        userDisplayName = profile.displayName;
-        userPictureUrl = profile.pictureUrl;
-        userStatusMessage = profile.statusMessage;
-    }).catch((err) => {
-        console.error("Error while get profile", err);
-    });
-    if (type == "profile") {
-        sendMessages([{type: "flex", altText: "Profile " + userDisplayName, contents: {type: "bubble", hero: {type: "image", url: userPictureUrl, size: "full", aspectRatio: "1:1", aspectMode: "cover", action: {type: "uri", uri: "line://app/1657024923-2r46WKKN?auto=yes&type=image&downloadUrl=" + userPictureUrl + "&previewUrl=" + userPictureUrl } }, body: {type: "box", layout: "vertical", contents: [{type: "text", text: userDisplayName, align: "center", weight: "bold", size: "xl"}, {type: "box", layout: "vertical", margin: "lg", spacing: "sm", contents: [{type: "text", text: userStatusMessage, wrap: true, color: "#666666", size: "sm", maxLines: 5, flex: 5 }] } ] }, footer: {type: "box", layout: "horizontal", spacing: "sm", contents: [{type: "button", style: "primary", height: "sm", color: "#02afff", action: {type: "uri", label: "Open Chat", uri: "https://line.me/ti/g2/JGUODBE4RE"}}, {type: "button", style: "primary", height: "sm", action: {type: "uri", label: "Profile", uri: "line://app/1657024923-2r46WKKN?auto=yes&type=profile"}}, {type: "spacer", size: "sm"}]}}}]); 
-    } else if (type == "text") {
-        sendMessages([{
-            type: "text",
-            text: document.getElementById("text").value
-        }]);
-    } else if (type == "sticker") {
-        sendMessages([{
-            type: "sticker",
-            packageId: document.getElementById("packageId").value,
-            stickerId: document.getElementById("stickerId").value
-        }]);
-    } else if (type == "stickerimage") {
-        stickerId = document.getElementById("stickerId").value;
-        packageId = document.getElementById("packageId").value;
-        animation = document.getElementById("animation").checked;
-        if (animation == true) {
-            imageUrl = "https://stickershop.line-scdn.net/stickershop/v1/sticker/" + stickerId + "/IOS/sticker_animation@2x.png";
-        } else {
-            imageUrl = "https://stickershop.line-scdn.net/stickershop/v1/sticker/" + stickerId + "/IOS/sticker@2x.png";
-        }
-        sendMessages([{
-            type: "template",
-            altText: userDisplayName + " sent a sticker.",
-            template: {
-                type: "image_carousel",
-                columns: [{
-                    imageUrl: imageUrl,
-                    action: {
-                        type: "uri",
-                        uri: "line://shop/sticker/detail/" + packageId
+        const userDisplayName = profile.displayName;
+        if (type == "profile") {
+            liff.sendMessages([{
+                type: "flex",
+                altText: "Profile " + userDisplayName,
+                contents: {
+                    "type": "bubble",
+                    "size": "kilo",
+                    "hero": {
+                        "type": "image",
+                        "url": profile.pictureUrl,
+                        "size": "full",
+                        "aspectRatio": "1:1",
+                        "aspectMode": "cover",
+                        "action": {
+                            "type": "uri",
+                            "label": "action",
+                            "uri": "https://liff.line.me/1660845055-GMJrEOVY?auto=yes&type=image&downloadUrl=" + profile.pictureUrl + "&previewUrl=" + profile.pictureUrl
+                        }
+                    },
+                    "body": {
+                        "type": "box",
+                        "layout": "vertical",
+                        "contents": [
+                        {
+                            "type": "box",
+                            "layout": "vertical",
+                            "contents": [
+                                {
+                              "type": "text",
+                              "text": userDisplayName,
+                              "align": "center",
+                              "size": "lg",
+                              "weight": "bold"
+                            }
+                          ]
+                        },
+                        {
+                          "type": "box",
+                          "layout": "vertical",
+                          "contents": [
+                            {
+                              "type": "text",
+                              "text": profile.statusMessage,
+                              "weight": "bold",
+                              "size": "md"
+                            }
+                          ]
+                        }
+                      ]
                     }
-                }]
+                  }
+            }]).then(() => {
+                console.log("Success sending message");
+                liff.closeWindow();
+            }).catch((err) => {
+                console.error("Sending message failed", err);
+            });
+        } else if (type == "text") {
+            console.log("Start sending message");
+            liff.sendMessages([{
+                type: "text",
+                text: document.getElementById("text").value
+            }]).then(() => {
+                console.log("Success sending message");
+                liff.closeWindow();
+            }).catch((err) => {
+                console.error("Sending message failed", err);
+            });
+        } else if (type == "sticker") {
+            console.log("Start sending message");
+            liff.sendMessages([{
+                type: "sticker",
+                packageId: document.getElementById("packageId").value,
+                stickerId: document.getElementById("stickerId").value
+            }]).then(() => {
+                console.log("Success sending message");
+                liff.closeWindow();
+            }).catch((err) => {
+                console.error("Sending message failed", err);
+            });
+        } else if (type == "stickerimage") {
+            console.log("Start sending message");
+            stickerId = document.getElementById("stickerId").value;
+            packageId = document.getElementById("packageId").value;
+            animation = document.getElementById("animation").checked;
+            if (animation == true) {
+                imageUrl = "https://stickershop.line-scdn.net/stickershop/v1/sticker/" + stickerId + "/IOS/sticker_animation@2x.png";
+            } else {
+                imageUrl = "https://stickershop.line-scdn.net/stickershop/v1/sticker/" + stickerId + "/IOS/sticker@2x.png";
             }
-        }]);
-    } else if (type == "image") {
-        sendMessages([{
-            type: "image",
-            originalContentUrl: document.getElementById("downloadUrl").value,
-            previewImageUrl: document.getElementById("previewUrl").value
-        }]);
-    } else if (type == "video") {
-        sendMessages([{
-            type: "video",
-            originalContentUrl: document.getElementById("downloadUrl").value,
-            previewImageUrl: document.getElementById("previewUrl").value
-        }]);
-    } else if (type == "audio") {
-        sendMessages([{
-            type: "audio",
-            originalContentUrl: document.getElementById("downloadUrl").value,
-            duration: 60000
-        }]);
-    } else if (type == "messages") {
-        sendMessages(JSON.parse(document.getElementById("messages").value))
-    } else if (type == "messagesUrl") {
-        var messagesUrl = document.getElementById("messagesUrl").value;
-        client.get(messagesUrl, function(response) {
-            sendMessages(JSON.parse(response))
-        }).catch((err) => {
-            console.error("Parsing messages failed", err);
-        });
-    } else if (type == "scanQr") {
-        sendMessages([{
-            type: "text",
-            text: document.getElementById("qrResult").value
-        }]);
-    }
+            liff.sendMessages([{
+                type: "template",
+                altText: userDisplayName + " sent a sticker.",
+                template: {
+                    type: "image_carousel",
+                    columns: [{
+                        imageUrl: imageUrl,
+                        action: {
+                            type: "uri",
+                            uri: "line://shop/sticker/detail/" + packageId
+                        }
+                    }]
+                }
+            }]).then(() => {
+                console.log("Success sending message");
+                liff.closeWindow();
+            }).catch((err) => {
+                console.error("Sending message failed", err);
+            });
+        } else if (type == "image") {
+            console.log("Start sending message");
+            liff.sendMessages([{
+                type: "image",
+                originalContentUrl: document.getElementById("downloadUrl").value,
+                previewImageUrl: document.getElementById("previewUrl").value
+            }]).then(() => {
+                console.log("Success sending message");
+                liff.closeWindow();
+            }).catch((err) => {
+                console.error("Sending message failed", err);
+            });
+        } else if (type == "video") {
+            console.log("Start sending message");
+            liff.sendMessages([{
+                type: "video",
+                originalContentUrl: document.getElementById("downloadUrl").value,
+                previewImageUrl: document.getElementById("previewUrl").value
+            }]).then(() => {
+                console.log("Success sending message");
+                liff.closeWindow();
+            }).catch((err) => {
+                console.error("Sending message failed", err);
+            });
+        } else if (type == "audio") {
+            console.log("Start sending message");
+            liff.sendMessages([{
+                type: "audio",
+                originalContentUrl: document.getElementById("downloadUrl").value,
+                duration: 60000
+            }]).then(() => {
+                console.log("Success sending message");
+                liff.closeWindow();
+            }).catch((err) => {
+                console.error("Sending message failed", err);
+            });
+        } else if (type == "messages") {
+            console.log("Start sending message");
+            var messages = JSON.parse(document.getElementById("messages").value);
+            liff.sendMessages(messages).then(() => {
+                console.log("Success sending message");
+                liff.closeWindow();
+            }).catch((err) => {
+                console.error("Sending message failed", err);
+            });
+        } else if (type == "messagesUrl") {
+            console.log("Start sending message");
+            var messagesUrl = document.getElementById("messagesUrl").value;
+            client.get(messagesUrl, function(response) {
+                var messages = JSON.parse(response);
+                liff.sendMessages(messages).then(() => {
+                    console.log("Success sending message");
+                    liff.closeWindow();
+                }).catch((err) => {
+                    console.error("Sending message failed", err);
+                });
+            }).catch((err) => {
+                console.error("Parsing messages failed", err);
+            });
+        }
+    }).catch((err) => {
+        console.error("LIFF getProfile failed", err);
+    });
 }
 
 function sendMessages(messages) {
