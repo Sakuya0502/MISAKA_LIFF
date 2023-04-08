@@ -5,7 +5,7 @@ if (params) {
     try {
         params = JSON.parse('{"' + decodeURI(params.replace(/&/g, "\",\"").replace(/=/g,"\":\"")) + '"}');
     } catch (err) {
-        getParameterByName = getParameterByNameV2;
+        console.error(err)
     }
 }
 
@@ -518,7 +518,7 @@ function getParameterByName(name) {
 }
 */ //useless
 
-function getParameterByNameV2(name) {
+function getParameterByName(name) {
     name = name.replace(/[\[\]]/g, "\\$&");
     var regex = new RegExp("[?&]" + name + "(=([^&#]*)|&|#|$)"),
         results = regex.exec(url);
