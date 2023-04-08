@@ -373,8 +373,7 @@ function sendLiffMessage() {
 function sendMessages(messages) {
     if (!liff.isInClient()) {
         sendAlertIfNotInClient()
-    }
-    else {
+    } else {
         console.info("Start sending message");
         liff.sendMessages(messages).then(() => {
             console.info("Success sending message");
