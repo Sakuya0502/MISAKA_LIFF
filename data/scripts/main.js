@@ -459,7 +459,7 @@ function sendLiffMessage() {
             console.log("Start sending message");
             var inputval = document.getElementById("messages").value;
             //var newval = inputval.replaceAll("\"", "\'");
-            var messages = JSON.parse(newval);
+            var messages = JSON.parse(inputval);
             liff.sendMessages([messages]).then(() => {
                 console.log("Success sending message");
                 liff.closeWindow();
